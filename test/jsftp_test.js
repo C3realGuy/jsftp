@@ -85,7 +85,7 @@ describe('jsftp test suite', function() {
       });
   });
 
-  it('test initialize bad host', function(next) {
+  it('test initialize bad host', function(done) {
     var ftp2 = new Ftp({
       host: 'badhost',
       user: 'user',
@@ -95,7 +95,7 @@ describe('jsftp test suite', function() {
 
     ftp2.on('error', function(err) {
       assert.equal(err.code, 'ENOTFOUND');
-      next();
+      done();
     });
   });
 
@@ -249,8 +249,8 @@ describe('jsftp test suite', function() {
     });
   });
 
-  it('test switch to unexistent CWD contains special string', function (next) {
-    ftp.raw.cwd('/unexistentDir/user', function (err, res) {
+  it('test switch to unexistent CWD contains special string', function(next) {
+    ftp.raw.cwd('/unexistentDir/user', function(err, res) {
       var code = parseInt(res.code, 10);
       assert.equal(code, 550);
       next();
