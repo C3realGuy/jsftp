@@ -251,6 +251,7 @@ describe('jsftp test suite', function() {
 
   it('test switch to unexistent CWD contains special string', function(next) {
     ftp.raw.cwd('/unexistentDir/user', function(err, res) {
+      assert(err);
       var code = parseInt(res.code, 10);
       assert.equal(code, 550);
       next();
@@ -267,6 +268,7 @@ describe('jsftp test suite', function() {
 
   it('test passive listing of nonexisting directory', function(next) {
     ftp.list('does-not-exist/', function(err) {
+      console.log('XYZ: ' + err);
       assert(err);
       assert.equal(typeof err, 'object');
       assert.ok(err.code === 450 || err.code === 550);
@@ -760,7 +762,7 @@ describe('jsftp test suite', function() {
     });
   });
 
-  it.skip('test listing a folder containing special UTF characters', function(next) {
+  it('test listing a folder containing special UTF characters', function(next) {
     var dirName = unorm.nfc('_éàèùâêûô_');
     var newDir = Path.join(remoteCWD, dirName);
     ftp.raw.mkd(newDir, function(err, res) {
